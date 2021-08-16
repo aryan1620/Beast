@@ -1,129 +1,76 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
+from tkinter import *
+import random
 
-# C extensions
-*.so
+root = Tk()
+root.geometry("400x400")
+root.resizable(0,0)
 
-# Distribution / packaging
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-pip-wheel-metadata/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+root.title("Rock, Paper, Scissor")
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
+root.config(bg="red")
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+Label(root, text="Rock, Paper, Scissor", font="arial 20 bold", bg="yellow").pack()
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
+user_take = StringVar()
 
-# Translations
-*.mo
-*.pot
+Label(root, text="Choose any one: rock, paper, scissor", font="arial 15 bold", bg ="yellow").place(x = 20, y = 70)
 
-# Django stuff:
-*.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
+Entry(root, font="arial 15", textvariable=user_take, bg="white").place(x=90, y=130)
 
-# Flask stuff:
-instance/
-.webassets-cache
+comp_pick = random.randint(1,3)
 
-# Scrapy stuff:
-.scrapy
+if comp_pick == 1:
+    comp_pick = "rock"
 
-# Sphinx documentation
-docs/_build/
+elif comp_pick == 2:
+    comp_pick = "paper"
 
-# PyBuilder
-target/
+else:
+    comp_pick = "scissor"
 
-# Jupyter Notebook
-.ipynb_checkpoints
+Result = StringVar()
 
-# IPython
-profile_default/
-ipython_config.py
+def play():
 
-# pyenv
-.python-version
+    user_pick = user_take.get()
 
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
+    if user_pick == comp_pick:
+        Result.set("Match Tied")
 
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
-__pypackages__/
+    elif user_pick=="rock" and comp_pick == "paper":
+        Result.set("You Loose, computer selected paper")
+    
+    elif user_pick=="rock" and comp_pick == "scissor":
+        Result.set("You win, computer selected scissor")
+    
+    elif user_pick == "paper" and comp_pick == "scissor":
+        Result.set("you loose computer selected scissor")
+    
+    elif user_pick == "paper" and comp_pick == "rock":
+        Result.set("You win, computer has selected rock")
 
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
+    elif user_pick=="scissor" and comp_pick == "rock":
+        Result.set("You loose, computer has selected rock")
 
-# SageMath parsed files
-*.sage.py
+    elif user_pick == "scissor" and comp_pick == "paper":
+        Result.set("You win, Computer selected paper")
+    else:
+        Result.set("Invalid: Choose Between Rock, Paper, Scissor")
 
-# Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
 
-# Spyder project settings
-.spyderproject
-.spyproject
+def reset():
+    Result.set("")
+    user_take.set("")
 
-# Rope project settings
-.ropeproject
+def exit():
+    root.destroy()
 
-# mkdocs documentation
-/site
+Entry(root, font="arial 10 bold", textvariable=Result, bg="white", width=50).place(x=25, y=250)
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+Button(root, font="arial 13 bold", text="Play", padx=5, bg="yellow", command=play).place(x=150, y = 190)
 
-# Pyre type checker
-.pyre/
+Button(root, font="arial 13 bold", text="Reset", padx=5, bg="yellow", command=reset).place(x=70, y = 310)
+
+Button(root, font="arial 13 bold", text="Exit", padx=5, bg="yellow", command=exit).place(x=230, y = 310)
+
+root.mainloop()
